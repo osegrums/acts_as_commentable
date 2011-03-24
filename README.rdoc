@@ -2,6 +2,7 @@ Acts As Commentable
 =================
 
 Allows for comments to be added to multiple and different models.
+Oskars: This version depends on Profile not User
 
 == Resources
 
