@@ -4,8 +4,8 @@ ActiveRecord::Schema.define(:version => 0) do
     t.datetime
   end
 
-  create_table :users do |u|
-    u.string :name
+  create_table :profiles do |p|
+    p.string :name
   end
 
   create_table :walls do |w|

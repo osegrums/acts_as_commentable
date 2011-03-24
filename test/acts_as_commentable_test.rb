@@ -56,13 +56,13 @@ class ActsAsCommentableTest < Test::Unit::TestCase
     assert_equal [public_comment], wall.public_comments
   end
 
-  def test_find_comments_by_user
-    user = User.create(:name => "Mike")
-    user2 = User.create(:name => "Fake") 
+  def test_find_comments_by_profile
+    profile = Profile.create(:name => "Mike")
+    profile2 = Profile.create(:name => "Fake")
     post = Post.create(:text => "Awesome post !")
-    comment = post.comments.create(:title => "First comment.", :comment => "This is the first comment.", :user => user)
-    assert_equal true, Post.find_comments_by_user(user).include?(comment)
-    assert_equal false, Post.find_comments_by_user(user2).include?(comment) 
+    comment = post.comments.create(:title => "First comment.", :comment => "This is the first comment.", :profile => profile)
+    assert_equal true, Post.find_comments_by_profile(profile).include?(comment)
+    assert_equal false, Post.find_comments_by_profile(profile2).include?(comment)
   end
 
   def test_find_comments_for_commentable
@@ -90,18 +90,18 @@ class ActsAsCommentableTest < Test::Unit::TestCase
     assert_equal [public_comment], Wall.find_public_comments_for(wall)
   end
 
-  def test_find_comments_by_user
-    user = User.create(:name => "Mike")
+  def test_find_comments_by_profile
+    profile = Profile.create(:name => "Mike")
     post = Post.create(:text => "Awesome post !")
-    comment = post.comments.create(:title => "First comment.", :comment => "This is the first comment.", :user => user)
-    assert_equal [comment], Post.find_comments_by_user(user)
+    comment = post.comments.create(:title => "First comment.", :comment => "This is the first comment.", :profile => profile)
+    assert_equal [comment], Post.find_comments_by_profile(profile)
 
     wall = Wall.create(:name => "wall")
-    private_comment = wall.private_comments.create(:title => "wall private comment", :comment => "Yipiyayeah !", :user => user)
-    assert_equal [private_comment], Wall.find_private_comments_by_user(user)
+    private_comment = wall.private_comments.create(:title => "wall private comment", :comment => "Yipiyayeah !", :profile => profile)
+    assert_equal [private_comment], Wall.find_private_comments_by_profile(profile)
 
-    public_comment = wall.public_comments.create(:title => "wall public comment", :comment => "Yipiyayeah !", :user => user)
-    assert_equal [public_comment], Wall.find_public_comments_by_user(user)
+    public_comment = wall.public_comments.create(:title => "wall public comment", :comment => "Yipiyayeah !", :profile => profile)
+    assert_equal [public_comment], Wall.find_public_comments_by_profile(profile)
   end
 
   def test_comments_ordered_by_submitted

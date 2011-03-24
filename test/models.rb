@@ -2,7 +2,7 @@ class Post < ActiveRecord::Base
   acts_as_commentable
 end
 
-class User < ActiveRecord::Base
+class Profile < ActiveRecord::Base
 end
 
 class Wall < ActiveRecord::Base

@@ -19,9 +19,9 @@ module ActsAsCommentable
 
     module Finders
       # Helper class method to lookup all comments assigned
-      # to all commentable types for a given user.
-      def find_comments_by_user(user, role = "comments")
-        where(["user_id = ? and role = ?", user.id, role]).order("created_at DESC")
+      # to all commentable types for a given profile.
+      def find_comments_by_profile(profile, role = "comments")
+        where(["profile_id = ? and role = ?", profile.id, role]).order("created_at DESC")
       end
 
       # Helper class method to look up all comments for 

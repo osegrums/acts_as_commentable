@@ -38,9 +38,9 @@ module Juixe
                 Comment.find_comments_for_commentable(commentable, obj.id, "#{role.to_s}")
               end
 
-              def self.find_#{method_name}_by_user(user) 
+              def self.find_#{method_name}_by_profile(profile)
                 commentable = self.base_class.name
-                Comment.where(["user_id = ? and commentable_type = ? and role = ?", user.id, commentable, "#{role.to_s}"]).order("created_at DESC")
+                Comment.where(["profile_id = ? and commentable_type = ? and role = ?", profile.id, commentable, "#{role.to_s}"]).order("created_at DESC")
               end
 
               def #{method_name}_ordered_by_submitted
