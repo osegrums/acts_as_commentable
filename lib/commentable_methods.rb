@@ -11,11 +11,16 @@ module Juixe
 
       module ClassMethods
         def acts_as_commentable(*args)
-          comment_roles = args.to_a.flatten.compact.map(&:to_sym)
+          if args[0].is_a?(Hash)
+            options = args[0]
+            comment_roles = nil
+          else
+            options = {}
+            comment_roles = args.to_a.flatten.compact.map(&:to_sym)
+          end
+
           write_inheritable_attribute(:comment_types, (comment_roles.blank? ? [:comments] : comment_roles))
           class_inheritable_reader(:comment_types)
-
-          options = ((args.blank? or args[0].blank?) ? {} : args[0])
 
           if !comment_roles.blank?
             comment_roles.each do |role|
@@ -27,7 +32,11 @@ module Juixe
                   :before_add => Proc.new { |x, c| c.role = role.to_s }}
             end
           else
-            has_many :comments, {:as => :commentable, :dependent => :destroy}
+            has_many :comments, {
+              :as => :commentable,
+              :dependent => :destroy,
+              :order => "created_at ASC"
+            }.merge(options)
           end
 
           comment_types.each do |role|

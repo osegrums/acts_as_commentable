@@ -4,12 +4,15 @@ ActiveRecord::Schema.define(:version => 0) do
     t.datetime
   end
 
-  create_table :profiles do |p|
-    p.string :name
+  create_table :profiles do |t|
+    t.string :name
   end
 
-  create_table :walls do |w|
-    w.string :name
+  create_table :walls do |t|
+    t.string :name
   end
 
+  create_table :gallery_items do |t|
+    t.string :name
+  end
 end

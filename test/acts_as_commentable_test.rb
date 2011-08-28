@@ -151,7 +151,20 @@ class ActsAsCommentableTest < Test::Unit::TestCase
     wall.add_public_comment(public_comment)
     assert_equal true, public_comment.is_comment_type?(:public)
     assert_equal false, public_comment.is_comment_type?(:comment)
+  end
+  
+  def test_default_comments_order
+    gallery_item = GalleryItem.create(:name => "Picasso")
+    gallery_item.comments.create(:comment => "cat", :created_at => 2.days.ago)
+    gallery_item.comments.create(:comment => "dog", :created_at => 4.days.ago)
+    assert_equal true, gallery_item.comments.where('').to_sql.include?("ORDER BY created_at ASC")
+  end
 
+  def test_comments_options
+    gallery_item = GalleryItem.create(:name => "Picasso")
+    gallery_item.comments.create(:comment => "cat")
+    gallery_item.comments.create(:comment => "dog")
+    assert_equal 1, gallery_item.comments.count
   end
 
 end
