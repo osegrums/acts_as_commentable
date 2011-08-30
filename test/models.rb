@@ -8,3 +8,7 @@ end
 class Wall < ActiveRecord::Base
   acts_as_commentable :public, :private
 end
+
+class GalleryItem < ActiveRecord::Base
+  acts_as_commentable :conditions => "comment NOT LIKE '%dog%'"
+end
